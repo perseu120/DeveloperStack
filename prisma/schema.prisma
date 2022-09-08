@@ -10,18 +10,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model question{
-  id Int @id @default(autoincrement())
-  askedBy String
+model question {
+  id       Int      @id @default(autoincrement())
+  askedBy  String
   question String
-} 
-  
-model answer {
-  id Int @id @default(autoincrement())
-  author   question   @relation(fields: [questionId], references: [id])
-  answeredBy Int
-  answer String
-  questionId Int
+  answer   answer[]
 }
 
-
+model answer {
+  id         Int      @id @default(autoincrement())
+  question   question @relation(fields: [questionId], references: [id])
+  answeredBy Int
+  answer     String
+  questionId Int
+}
